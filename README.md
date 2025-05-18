@@ -43,7 +43,7 @@ isolated_digit_recognition_project/
 ├── html_reporter.py        # Generates the HTML report
 ├── report_template.html    # Jinja2 template for the HTML report
 ├── config.py               # Configuration for paths, parameters, run control
-├── data/                   # Directory for YOUR recorded audio files (needs creation)
+├── data/                   # Directory for YOUR recorded audio files
 │   ├── zero_1.wav
 │   ├── ...
 │   └── nine_4.wav
