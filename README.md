@@ -47,16 +47,13 @@ isolated_digit_recognition_project/
 │   ├── zero_1.wav
 │   ├── ...
 │   └── nine_4.wav
-├── TDIGITS_subset/         # Directory for the TDIGITS dataset (needs download)
-│   ├── jackson/            # wav files for jackson
-│   ├── nicolas/            # wav files for nicolas
-│   ├── theo/               # wav files for theo
-│   └── yweweler/           # wav files for yweweler
-├── plots/                  # Directory for saved plots (auto-created)
-│   └── part_a_dtw_plot.png
-│   └── ...
-├── assignment_report.html  # Auto-generated HTML report
+├── TDIGITS_subset/         # Directory for the TDIGITS dataset
+│   ├── jackson/
+│   ├── nicolas/
+│   ├── theo/
+│   └── yweweler/
 ├── README.md               # This file
+├── .gitignore
 └── requirements.txt        # Python dependencies
 ```
 
@@ -72,7 +69,7 @@ isolated_digit_recognition_project/
 2.  **Clone the Repository (Optional):**
     ```bash
     git clone <repository-url>
-    cd isolated_digit_recognition_project
+    cd Isolated-Digit-Recognition-System
     ```
     Otherwise, ensure all project files are in a single directory.
 
@@ -94,7 +91,7 @@ isolated_digit_recognition_project/
 
     *   **Your Recordings (for Part B):**
         *   Create a directory named `data/` in the project root.
-        *   Record your voice saying each digit (0-9).
+        *   Record your voice saying each digit (0-9). (Added my voice recording for reference)
             *   **Training (Reference) Set:** One recording per digit, named `zero_1.wav`, `one_1.wav`, ..., `nine_1.wav`.
             *   **Test Sets (3 repetitions):**
                 *   `zero_2.wav`, ..., `nine_2.wav`
@@ -103,9 +100,7 @@ isolated_digit_recognition_project/
         *   Ensure files are in `.wav` format (e.g., 16-bit PCM, 16000Hz, mono).
 
     *   **TDIGITS Dataset (for Part C):**
-        *   Download the `TDIGITS_subset` provided (link usually in assignment description).
-        *   Unzip it.
-        *   Place the **entire `TDIGITS_subset` folder** (which contains subfolders like `jackson/`, `nicolas/`, etc.) into the root of your project directory.
+        *   Contains the voice recording of 4 different person as dataset
         *   The path is configured in `config.py` (`TDIGITS_BASE_PATH`).
 
 ---
@@ -164,10 +159,10 @@ The script will perform the following and generate relevant outputs:
 
 ## 📞 Contact
 
-Prabhat Kumar Pensalwar 
-*   [LinkedIn](https://www.linkedin.com/in/prabhatpensalwar/)
-*   [GitHub](https://github.com/PrabhatPensalwar)
-*   Email: `prabhat.pensalwar@gmail.com`
+Prabhhat Pensalwar
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/prabhat-pensalwar-2ab7a5330/)  [![GitHub](https://img.shields.io/badge/GitHub-black?style=for-the-badge&logo=github)](https://github.com/AsPrabhat)  [![Email](https://img.shields.io/badge/Email-red?style=for-the-badge&logo=gmail&logoColor=white)](mailto:prabhatworkspace@gmail.com)
+
 
 ---
 
