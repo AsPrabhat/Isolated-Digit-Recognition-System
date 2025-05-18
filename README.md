@@ -68,7 +68,7 @@ isolated_digit_recognition_project/
 
 2.  **Clone the Repository (Optional):**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/AsPrabhat/Isolated-Digit-Recognition-System
     cd Isolated-Digit-Recognition-System
     ```
     Otherwise, ensure all project files are in a single directory.
