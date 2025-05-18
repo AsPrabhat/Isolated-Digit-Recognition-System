@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Isolated Digit Recognition Assignment Report</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
+        h1, h2, h3 { color: #333; }
+        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #eee; border-radius: 5px; }
+        .plot-container { text-align: center; margin-bottom: 20px; }
+        .plot-container img { max-width: 100%; height: auto; border: 1px solid #ddd; }
+        table { border-collapse: collapse; width: auto; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f9f9f9; padding: 10px; border: 1px solid #eee; overflow-x: auto; }
+        .error { color: red; font-weight: bold;}
+        .observation { font-style: italic; color: #555; margin-top:10px; }
+    </style>
+</head>
+<body>
+    <h1>Isolated Digit Recognition using DTW - Report</h1>
+
+    {% if data.part_a_results %}
+    <div class="section">
+        <h2>Part (a): Basic DTW</h2>
+        {% if data.part_a_results.error %}
+            <p class="error">Error in Part (a): {{ data.part_a_results.error }}</p>
+        {% else %}
+            <p><strong>Sequences:</strong></p>
+            <p>A = {{ data.part_a_results.sequence_a }}</p>
+            <p>B = {{ data.part_a_results.sequence_b }}</p>
+            <p><strong>Optimal DTW Distance:</strong> {{ "%.2f"|format(data.part_a_results.dtw_distance) }}</p>
+            {% if data.part_a_results.plot_path %}
+            <div class="plot-container">
+                <p><strong>DTW Path Visualization:</strong></p>
+                <img src="{{ data.part_a_results.plot_path }}" alt="Part A DTW Plot">
+            </div>
+            {% else %}
+            <p><em>DTW plot not generated for Part (a).</em></p>
+            {% endif %}
+        {% endif %}
+        <div class="observation">
+            <strong>Observations for Part (a):</strong>
+            <ul>
+                <li>The optimal DTW distance quantifies the similarity between sequences A and B after non-linear alignment.</li>
+                <li>The plot visualizes the local cost matrix (pairwise distances) and the accumulated cost matrix. The red/lime line shows the optimal warping path.</li>
+                <li>Observe how the path deviates from a straight diagonal to accommodate differences in timing or structure between the sequences.</li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if data.part_b_results %}
+    <div class="section">
+        <h2>Part (b): Isolated Digit Recognition (Your Recordings)</h2>
+        {% if data.part_b_results.error %}
+            <p class="error">Error in Part (b): {{ data.part_b_results.error }}</p>
+        {% else %}
+            {% if data.part_b_results.example_recognition and data.part_b_results.example_recognition.test_label %}
+                <p><strong>Example Recognition (Test: '{{ data.part_b_results.example_recognition.test_label }}'):</strong> 
+                Recognized as '{{ data.part_b_results.example_recognition.recognized_digit }}' 
+                with DTW distance {{ "%.2f"|format(data.part_b_results.example_recognition.distance) }}.
+                </p>
+            {% endif %}
+
+            {% if data.part_b_results.same_digit_plot_path %}
+            <div class="plot-container">
+                <p><strong>DTW Path for Same Digit ({{ data.part_b_results.same_digit_label_1 }} vs {{ data.part_b_results.same_digit_label_2 }}):</strong></p>
+                <img src="{{ data.part_b_results.same_digit_plot_path }}" alt="Part B Same Digit DTW Plot">
+            </div>
+            {% else %}
+            <!-- <p><em>Same digit DTW plot not generated for Part (b).</em></p> -->
+            {% endif %}
+
+            {% if data.part_b_results.diff_digit_plot_path %}
+            <div class="plot-container">
+                <p><strong>DTW Path for Different Digits ({{ data.part_b_results.diff_digit_label_a }} vs {{ data.part_b_results.diff_digit_label_b }}):</strong></p>
+                <img src="{{ data.part_b_results.diff_digit_plot_path }}" alt="Part B Different Digits DTW Plot">
+            </div>
+            {% else %}
+            <!-- <p><em>Different digits DTW plot not generated for Part (b).</em></p> -->
+            {% endif %}
+
+            {% if data.part_b_results.accuracy is defined and data.part_b_results.accuracy != "N/A (No valid test data)" %}
+                <p><strong>Overall Accuracy on Your Recordings:</strong> {{ "%.2f"|format(data.part_b_results.accuracy * 100) }}%</p>
+            {% elif data.part_b_results.accuracy %}
+                 <p><strong>Overall Accuracy on Your Recordings:</strong> {{ data.part_b_results.accuracy }}</p>
+            {% endif %}
+
+            {% if data.part_b_results.confusion_matrix_plot_path %}
+            <div class="plot-container">
+                <p><strong>Confusion Matrix (Your Recordings):</strong></p>
+                <img src="{{ data.part_b_results.confusion_matrix_plot_path }}" alt="Part B Confusion Matrix">
+            </div>
+            {% elif data.part_b_results.accuracy != "N/A (No valid test data)" %}
+            <p><em>Confusion matrix plot not generated for Part (b).</em></p>
+            {% endif %}
+        {% endif %}
+         <div class="observation">
+            <strong>Observations for Part (b):</strong>
+            <ul>
+                <li>DTW distance for same-digit comparisons is expected to be lower than for different-digit comparisons.</li>
+                <li>The confusion matrix shows the performance of the recognizer. Diagonal elements are correct classifications. Off-diagonal elements show misclassifications.</li>
+                <li>Commonly confused digits might be phonetically similar or have similar temporal MFCC patterns.</li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if data.part_c_results %}
+    <div class="section">
+        <h2>Part (c): Evaluation on TDIGITS</h2>
+        {% if data.part_c_results.error %}
+             <p class="error">Error in Part (c): {{ data.part_c_results.error }}</p>
+        {% else %}
+            {% if data.part_c_results.same_speaker_accuracy is defined and data.part_c_results.same_speaker_accuracy != "N/A (Ref data error)" %}
+                <p><strong>Same-Speaker Accuracy (TDIGITS - Ref: {{data.part_c_results.ref_speaker_same}}, Test: {{data.part_c_results.ref_speaker_same}}):</strong> 
+                {{ "%.2f"|format(data.part_c_results.same_speaker_accuracy * 100) }}%</p>
+            {% elif data.part_c_results.same_speaker_accuracy %}
+                 <p><strong>Same-Speaker Accuracy (TDIGITS):</strong> {{data.part_c_results.same_speaker_accuracy}}</p>
+            {% endif %}
+            
+            {% if data.part_c_results.cross_speaker_accuracies %}
+                <p><strong>Cross-Speaker Accuracies (TDIGITS - Ref: {{data.part_c_results.ref_speaker_cross}}):</strong></p>
+                <ul>
+                {% for speaker, acc in data.part_c_results.cross_speaker_accuracies.items() %}
+                    <li>Test Speaker '{{ speaker }}': {{ "%.2f"|format(acc * 100) }}%</li>
+                {% endfor %}
+                </ul>
+                {% if data.part_c_results.overall_cross_speaker_accuracy is defined and data.part_c_results.overall_cross_speaker_accuracy != "N/A" %}
+                <p><strong>Overall Average Cross-Speaker Accuracy:</strong> 
+                {{ "%.2f"|format(data.part_c_results.overall_cross_speaker_accuracy * 100) }}%</p>
+                {% elif data.part_c_results.overall_cross_speaker_accuracy %}
+                 <p><strong>Overall Average Cross-Speaker Accuracy:</strong> {{ data.part_c_results.overall_cross_speaker_accuracy }}</p>
+                {% endif %}
+            {% endif %}
+            
+            <p><strong>Suggestions for Improvement:</strong></p>
+            <ul>
+            {% for suggestion in data.part_c_results.suggestions %}
+                <li>{{ suggestion }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+         <div class="observation">
+            <strong>Observations for Part (c):</strong>
+            <ul>
+                <li>Compare same-speaker accuracy on TDIGITS with your own recordings. Differences might be due to recording quality, consistency, or dataset characteristics.</li>
+                <li>A significant drop in accuracy is expected for cross-speaker tests, highlighting speaker variability.</li>
+                <li>The proposed improvements aim to make the system more robust to these variations.</li>
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+</body>
+</html>

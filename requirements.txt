@@ -1,0 +1,7 @@
+numpy
+matplotlib
+scipy
+speechpy
+seaborn
+Jinja2
+# pydub (if you adapt the Colab recording for local use with it, otherwise not strictly needed by these files)
